@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1 />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Sunflower Identification System</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="static/img/sis_icono.ico" />
+        <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
+        rel="stylesheet" type="text/css" />
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+                
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="static/css/styles.css" rel="stylesheet" />
+        <script src="{{ url_for('static', filename='/js/upload.js') }}"></script>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top"><img src="static/img/sis1.png" alt="..." /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <!-- #services #portfolio #team-->
+                        <li class="nav-item"><a class="nav-link" href="#page-top">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Acerca de</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">Mi girasol</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">Recomendaciones</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-subheading"> ¡cuida la salud de tu girasol hoy! </div>
+                <div class="masthead-heading">Sunflower Identification System </div>
+                <a class="btn btn-primary btn-xl text-uppercase" href="#services">Iniciar</a>
+            </div>
+        </header>
+
+        <!-- About-->
+        <section class="page-section bg-warning bg-gradient" id="about">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase" >Acerca de</h2>    
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="image">
+                      <img class="rounded-circle img-fluid" src="static/img/about/1.jpg" alt="...">
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row justify-content-center">
+                      <div class="col-lg-8">
+                        <div class="heading text-center">
+                          <h4 class="subheading" ><br>¿Qué es SIS?</h4>
+                        </div>
+                        <div class="body text-center">
+                          <h4>SIS tiene como objetivo ayudar a el cuidado de girasoles domésticos permitiendo identificar através de fotos de las hojas del girasol 3 tipos posibles de plaga y dando sugerencias sobre que cuidado darle en caso de una plaga. Estas plagas son conocidas como mildiú velloso, moho gris y verticilosis</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+        </section>
+
+        <!-- Services-->
+        <section class="page-section" id="services">
+            <div class="container">
+              <div class="text-center">
+                <h1 class="mb-4">Sube tu foto</h1>
+                <div class="d-flex justify-content-center mt-4">
+                    <form action="/services" method="POST" enctype="multipart/form-data" class="row g-3">
+                    <div class="col-auto">
+                      <label for="image-input" class="visually-hidden">Selecciona una imagen</label>
+                      <input type="file" name="image" id="image-input" class="form-control" onchange="readURL(this);"/> 
+                    </div>
+                    <div class="col-auto">
+                      <button type="submit" class="btn btn-primary">Resultado</button>
+                    </div>
+                  </form>
+                </div>
+          
+                <div>
+                  {% if image_url %}
+                  <div class="text-center mt-4">
+                    <img src="{{ image_url }}" id="image-preview" class="img-fluid" style="max-width: 200px;">
+                  </div>
+                  {% endif %}
+                  
+                  {% if prediction %}
+                  <div class="text-center mt-4">
+                    <p>{{ prediction }}</p>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </section>
+     
+        <!-- Portfolio Grid-->
+        <section class="page-section bg-dark" id="portfolio">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase" style="color: white;">Recomendaciones</h2>
+
+                    <h3 class="section-subheading text-muted">Aquí encontrarás qué podrías hacer en caso de que tu girasol esté enfermo</h3>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="static/assets/img/portfolio/downy.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Mildiú velloso</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 2-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="static/img/portfolio/leaf-scars.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Verticilosis</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 3-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="static/img/portfolio/gray.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Moho gris</div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                        <!-- Portfolio item 4-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="static/img/portfolio/fresh.png" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">Hoja sana</div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team-->
+        <section class="page-section bg-light" id="team">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Desarrollado por:</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="static/img/team/2.jpeg" alt="..." />
+                            <h4>Diego Rodolfo Vargas Vega</h4>
+                            <p class="text-muted"> rodolfovargas802@gmail.com</p>
+                            <p class="text-muted"> computational engineering student</p>
+                            <a class="btn btn-dark btn-social mx-2" href="https://github.com/rudolfwolf" aria-label="Diego Vargas github Profile" target="_blank"><i class="fa-brands fa-github"></i></a>
+                            <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/rodolfo-vargas-mx/" aria-label="Diego Vargas linkedin Profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        <!-- Contact-->
+        <section class="page-section bg-dark text-white" id="contact">
+            <div class="container">
+              <div class="text-center">
+                <h2 class="section-heading text-uppercase">Contáctanos</h2>
+                <h3 class="section-subheading text-muted">¡Mándanos un mensaje!</h3>
+                <a href="mailto:soporte_sis_contacto@proton.me?Subject=Soporte%20producto%SIS%" class="btn btn-primary btn-xl text-uppercase">Contactar por correo</a>
+                <p class="text-white-50"><br><br><br>En caso de dudas o comentarios, proporcionamos el siguiente correo electrónico donde te atenderemos a la brevedad.<br><br><br></p>
+              </div>
+            </div>
+          </section>
+
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start">Copyright &copy;SIS 2023</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="https://github.com/rudolfwolf" aria-label="Diego Vargas github Profile" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/rodolfo-vargas-mx/" aria-label="Diego Vargas linkedin Profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>                        
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a class="link-dark text-decoration-none me-3" href="#!">UTEG</a>
+                        <a class="link-dark text-decoration-none" href="#!">Proyecto Modular</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Portfolio Modals-->
+        <!-- Portfolio item 1 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="static/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Mildiú velloso</h2>
+                                    <img class="img-fluid d-block mx-auto" src="static/img/portfolio/1.png" alt="..." />
+                                    <p>SÍNTOMAS<br>
+
+                                        <br>• Atrofia, clorosis de la hoja, esporulación blanca en el envés de la hoja, muerte de la planta
+                                        <br>• Cabezas horizontales cuando maduran
+                                        <br>• Infección secundaria: manchas foliares cloróticas discretas en la superficie superior de la hoja
+                                        
+                                        <br>FACTORES QUE FAVORECEN EL DESARROLLO
+                                        
+                                        <br>• Suelos fríos y lluvias poco después de la siembra que conducen a un suelo anegado
+                                        <br>• Noches frescas con rocío o lluvia (para lesiones locales por infección secundaria)
+                                        
+                                        <br><br>HECHOS IMPORTANTES<br>
+                                        
+                                        <br>• Las infecciones secundarias NO causan pérdida de rendimiento
+                                        <br>• El patógeno se transmite por el suelo y puede sobrevivir muchos años en el suelo
+                                        <br>• La enfermedad es específica de los girasoles
+                                        <br>• Se pueden usar tratamientos de semillas con fungicidas e híbridos resistentes para el manejo
+                                        <br>• Puede confundirse con daño por herbicida</p>
+                                    
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 2 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="static/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">verticilosis</h2>
+                                
+                                    <img class="img-fluid d-block mx-auto" src="static/img/portfolio/2.png" alt="..." />
+                                    <p> <br>SÍNTOMAS<br>
+
+                                        <br>• Clorosis intervenal y necrosis comenzando en las hojas más bajas y progresando hacia arriba
+                                        <br>• Tejido vascular dañado; inicialmente, un anillo marrón puede estar presente
+                                        <br>• Marchitez que ocurre en la floración, generalmente en parches o hileras
+                                        <br>• Médula encogida y negra en la madurez
+                                        
+                                        <br><br>FACTORES QUE FAVORECEN EL DESARROLLO<br>
+                                        
+                                        <br>• Estrés hídrico (suelo arenoso, calor, sequía, etc.)
+                                        <br>• Historial de campo con marchitez por Verticillium
+                                        
+                                        <br><br>HECHOS IMPORTANTES<br>
+                                        
+                                        <br>• El mismo patógeno causa el marchitamiento por Verticillium en otros cultivos (papas, etc.)
+                                        <br>• Puede ser económicamente devastador con alta presión de enfermedades
+                                        <br>• Los síntomas de la hoja se pueden confundir con el cancro del tallo Phomopsis
+                                        <br>• Puede confundirse con la pudrición carbónica y el marchitamiento por Sclerotinia</p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 3 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="static/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Moho gris</h2>
+                                    
+                                    <img class="img-fluid d-block mx-auto" src="static/img/portfolio/3.png" alt="..." />
+                                    <p><br>SÍNTOMAS<br>
+
+                                        <br>• Las lesiones comienzan como áreas marrones grandes, blandas (blandas) en la parte posterior de la cabeza que se vuelven de color canela, generalmente inodoras
+                                        <br>• Se forma moho blanco (micelio) y estructuras negras duras (esclerocios) dentro de la cabeza
+                                        <br>• Las cabezas se triturarán y puede ocurrir desintegración y/o decapitación
+                                        
+                                        <br><br>FACTORES QUE FAVORECEN EL DESARROLLO<br>
+                                        
+                                        <br>• Suelos húmedos antes de la floración (facilita la producción de apotecios)
+                                        <br>• Humedad frecuente durante o después de la floración, incluyendo lluvia, niebla, rocío intenso
+                                        <br>• Temperaturas de 85 F o menos
+                                        
+                                        <br><br>HECHOS IMPORTANTES<br>
+                                        
+                                        <br>• El mismo patógeno causa el marchitamiento por esclerotinia y la pudrición de la mitad del tallo por esclerotinia
+                                        <br>• El patógeno puede sobrevivir durante muchos años en el suelo como esclerocios
+                                        <br>• Las herramientas de gestión son limitadas
+                                        <br>• Más común en las Grandes Llanuras del norte de EE. UU.
+                                        <br>• Puede confundirse con la pudrición de la cabeza por Rhizopus</p>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portfolio item 4 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="static/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Hojas sanas</h2>
+                                    <p class="item-intro text-muted">Enhorabuena</p>
+                                    <img class="img-fluid d-block mx-auto" src="static/img/portfolio/4.png" alt="..." />
+                                    <p>Para mantener las hojas de girasol sanas, es importante seguir algunos cuidados básicos. Aquí tienes algunas recomendaciones:<br>
+
+                                        <br>1. Riego adecuado: El girasol necesita un riego regular pero no excesivo. El suelo debe mantenerse ligeramente húmedo, pero evita el encharcamiento, ya que el exceso de agua puede propiciar enfermedades fúngicas. Riega las plantas de girasol de manera uniforme, evitando mojar las hojas en exceso.
+                                        <br>
+                                    <br>2. Exposición solar: Los girasoles son plantas que necesitan luz solar directa durante la mayor parte del día. Asegúrate de ubicar tus plantas en un lugar soleado donde reciban al menos 6 horas de luz solar diaria.
+                                        <br>
+                                        <br>3. Protección contra el viento: Los girasoles pueden ser afectados por vientos fuertes, especialmente cuando son jóvenes. Si vives en una zona ventosa, considera proteger tus plantas con cercas u otros elementos que actúen como barrera contra el viento.
+                                        <br>
+                                        <br>4. Nutrición adecuada: Proporciona un suelo rico en nutrientes para tus girasoles. Puedes enriquecerlo con compost o abono orgánico antes de plantar. Además, durante la temporada de crecimiento, puedes aplicar un fertilizante equilibrado específico para flores siguiendo las indicaciones del envase.
+                                        <br>
+                                        <br>5. Control de plagas y enfermedades: Observa regularmente tus plantas de girasol en busca de signos de plagas o enfermedades, como manchas en las hojas, deformidades o presencia de insectos. Si detectas algún problema, puedes utilizar métodos orgánicos de control, como la aplicación de insecticidas naturales o la eliminación manual de plagas.
+                                        <br>
+                                        <br>6. Mantenimiento de la planta: A medida que tus girasoles crecen, asegúrate de retirar las hojas muertas o marchitas. Esto ayudará a prevenir la propagación de enfermedades y permitirá que la planta concentre sus recursos en el desarrollo de hojas sanas y flores.
+                                        <br>
+                                        <br>Recuerda que estas recomendaciones son generales y pueden variar según las condiciones específicas de tu región y cultivo. Observa siempre las necesidades individuales de tus plantas y ajústate a ellas para mantener tus hojas de girasol saludables.</p>
+                                    
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="static/js/scripts.js"></script>
+
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+          
+    </body>
+</html>
